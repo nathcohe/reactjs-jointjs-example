@@ -7,13 +7,14 @@ import './assets/jointjs.css';
 import configureStore from './store/configureStore';
 import App from './containers/app';
 import Design from './components/design';
+import Playground from './components/playground';
 
 const store = configureStore();
 
 ReactDOM.render((
     <Provider store={store}>
         <Router history={browserHistory}>
-            <Route path="/" component={App} />
+            <Route path="/" component={Playground} />
             <Route path="/home" component={App} />
             <Route path="/design" component={Design} />
         </Router>
