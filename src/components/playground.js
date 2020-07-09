@@ -4,8 +4,8 @@ import joint from 'jointjs/index';
 import { connect } from 'react-redux'
 import Shapes from '../jointjs-configuration/Shapes'
 
-const vertexes = ["A", "B", "C", "D"];
-const edges = [("A", "B"), ("C", "D"), ("A", "D")];
+const vertices = ["A", "B", "C", "D"];
+const edges = [["A", "B"], ["C", "D"], ["A", "D"]];
 
 class Graph extends React.Component {
 
@@ -29,7 +29,22 @@ class Graph extends React.Component {
 
         const link = Edge(node1, node2)
 
-        this.graph.addCells([node1, node2, link]);
+        this.vertice_objects = {}
+        vertices.forEach(e => this.vertice_objects[e] = Node(e))
+
+        var cells = []
+
+        for (var e in this.vertice_objects) {
+            cells.push(this.vertice_objects[e])
+        }
+        console.log(edges)
+        edges.forEach(e => {
+            cells.push(Edge(this.vertice_objects[e[0]], this.vertice_objects[e[1]]))
+        }
+        )
+
+
+        this.graph.addCells(cells);
     }
 
     render() {
@@ -43,7 +58,7 @@ class Graph extends React.Component {
 
 function Node(name) {
     return new joint.shapes.basic.Circle({
-        size: { width: 100, height: 100 },
+        size: { width: 50, height: 50 },
         attrs: {
             circle: { fill: 'blue' },
             text: { text: name, fill: 'white' }
